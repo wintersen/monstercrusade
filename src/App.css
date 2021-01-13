@@ -1,7 +1,7 @@
 #aaa {
   background-color: #000000;
   color: #ffffff;
-  height: 50vh;
+  height: 45vh;
   overflow-y: scroll;
 }
 
@@ -11,6 +11,11 @@
 
 .textCenter {
   text-align: center;
+}
+
+.woodBorder {
+  border: 30px solid transparent;
+  border-image: url(./assets/border.png) 30 round;
 }
 
 .killedCircle{

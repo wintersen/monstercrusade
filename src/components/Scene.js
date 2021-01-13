@@ -10,11 +10,6 @@ import playerSprite from '../assets/temp1.png';
 import { ProgressBar } from 'react-bootstrap';
 
 class Scene extends React.Component {
-  constructor(props){
-    super(props);
-  }
-
-
   render(){
     return(
       <Container className="textCenter">

@@ -86,6 +86,9 @@ class RPG extends React.Component {
   onAccept(){
     let x = Math.floor(Math.random() * Math.floor(5))
     switch(x){
+      default:
+        this.addLine("NPC generator broke");
+        break;
       case 0:
         this.addLine("The stranger offers you a healthy snack!  You feel better after enjoying some trail mix.");
         this.addLine("You are healed 15 hit points!");
@@ -163,7 +166,7 @@ class RPG extends React.Component {
 
   getHealing(){
     this.setState(state => ({eventType: "healing"}));
-    this.setState(state => ({enemy: {hp: 0, attack: 30, range: 0, img: fairy, intro:""}}));
+    this.setState(state => ({enemy: {hp: 0, maxhp: 1, attack: 30, range: 0, img: fairy, intro:""}}));
     this.addLine("✨A helpful fairy has come to help!✨", "intro");
     this.addLine("\"Brave warrior, allow me to use my magic to take care of your wounds.\"", 'fairy')
     this.addLine("You are healed for 30 hit points!  Aren't you lucky?")
@@ -175,7 +178,7 @@ class RPG extends React.Component {
 
   getNpc(){
     this.setState(state => ({eventType: "npc",
-    enemy: {hp: 0, attack: 0, range: 0, img: npc, intro:"ok"}}));
+    enemy: {hp: 0, maxhp: 1, attack: 0, range: 0, img: npc, intro:""}}));
     this.addLine("An npc appeared!", "intro");
   }
 
@@ -198,6 +201,8 @@ class RPG extends React.Component {
     const eventType = this.state.eventType;
     let buttons;
     switch(eventType){
+      default:
+        break;
       case 'enemy':
         buttons = <AttackButtons onPlayerAttack={this.onPlayerAttack} onPlayerDefend={this.onPlayerDefend}/>
         break;
@@ -205,7 +210,7 @@ class RPG extends React.Component {
         buttons = <EventButtons onNext={this.onNext}/>
         break;
       case 'npc':
-      buttons = <NpcButtons onAccept={this.onAccept} onDeny={this.onDeny} />
+        buttons = <NpcButtons onAccept={this.onAccept} onDeny={this.onDeny} />
     }
 
 

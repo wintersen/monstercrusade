@@ -11,7 +11,7 @@ class TextBox extends React.Component {
     return(
       <Container>
         <Row>
-          <Col>
+          <Col className="woodBorder pa-0 px-0" >
             <Container id="aaa" fluid>
             <div id="messages">
               {this.props.data.messageHistory.map((line) => <TextLine line={line} />)}

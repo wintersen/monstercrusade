@@ -15,7 +15,7 @@ class AttackButtons extends React.Component {
         <Row>
           <Col><Button block onClick={this.props.onPlayerAttack}> Attack </Button></Col>
           <Col><Button block onClick={this.props.onPlayerDefend}> Defend </Button></Col>
-          <Col><Button block onClick={console.log('s')}> End the Crusade </Button></Col>
+          <Col><Button block > End the Crusade </Button></Col>
         </Row>
       </Container>
     );
