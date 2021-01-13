@@ -1,13 +1,12 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
-import temp from './assets/temp1.png';
-import temp2 from './assets/temp2.png';
+import playerSprite from '../assets/temp1.png';
 import { ProgressBar } from 'react-bootstrap';
 
 class Scene extends React.Component {
@@ -21,7 +20,7 @@ class Scene extends React.Component {
       <Container className="textCenter">
         <Row>
           <Col>
-            <Image src = {temp} />
+            <Image src = {playerSprite} />
           </Col>
           <Col>
             <Image src = {this.props.enemyImg} />

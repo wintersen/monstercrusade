@@ -5,11 +5,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import TextBox from './TextBox';
-import Scene from './Scene';
-import AttackButtons from './AttackButtons';
-import EventButtons from './EventButtons';
-import NpcButtons from './NpcButtons';
+import TextBox from './components/TextBox';
+import Scene from './components/Scene';
+import AttackButtons from './components/AttackButtons';
+import EventButtons from './components/EventButtons';
+import NpcButtons from './components/NpcButtons';
+import Counter from './components/Counter';
 
 import enemy1 from './assets/temp2.png';
 import enemy2 from './assets/temp3.png';
@@ -43,7 +44,7 @@ class RPG extends React.Component {
 
 
 //FUNCTION FOR ADDING LINES, second param is for class
-  addLine(msg, cls){
+  addLine(msg = '==========================================================', cls){
     let temp = this.state.messageHistory;
     if(cls){
       temp.push({text: msg, class: cls});
@@ -67,14 +68,14 @@ class RPG extends React.Component {
     }
     else{
       this.setState(state => (temp));
-      this.addLine("Do "+ dmg + " points of damage!");
+      this.addLine("You did "+ dmg + " points of damage!");
       this.onEnemyAttack(this.state.player.def);
     }
   }
 
   onPlayerDefend(){
-    this.addLine("You defended.");
-    this.onEnemyAttack(5);
+    this.addLine("The best defense is an even better offense!  YOU ATTACK!!!", "defense");
+    this.onPlayerAttack();
   }
 
   onNext(){
@@ -115,7 +116,7 @@ class RPG extends React.Component {
         break;
       case 4:
         this.addLine("\"Come closer, my dear...  I have something to show you...\"");
-        this.addLine("You walk up closer to the mysterious stranger in a cloak.  Just as you get the feeling something is off, they reach into their cloak and fling some kind of powder at your face. The stranger cackles and disappeares without a trace while you desperately rub the powder out of your eyes.");
+        this.addLine("You walk up closer to the mysterious stranger in a cloak.  Just as you get the feeling something is off, they reach into their cloak and fling some kind of powder at your face. The stranger cackles and disappears without a trace while you desperately rub the powder out of your eyes.");
         this.addLine("After a few minutes of painful burning, you manage to blink away the blurriness from your vision, but you have taken 5 points of damage.")
         this.setState(state => ({player: {...state.player, hp: (state.player.hp - 5)}}));
         this.getNextEvent();
@@ -137,11 +138,11 @@ class RPG extends React.Component {
     let damage = this.generateDamage(temp.enemy.attack, temp.enemy.range) - def;
     temp.player.hp -= damage;
     this.setState(state => temp);
-    this.addLine("The enemy did " + damage + " points of damage to you!");
+    this.addLine("The enemy did " + damage + " points of damage to you!", "damage");
   }
 
   killEnemy(){
-    this.addLine("You killed the enemy!")
+    this.addLine("You killed the enemy! 🎉")
     this.setState(state => ({totalKilled: state.totalKilled + 1}));
     this.getNextEvent();
   }
@@ -157,13 +158,13 @@ class RPG extends React.Component {
     let tempEnemy = enemyList[Math.floor(Math.random() * Math.floor(enemyList.length))];
 
     this.setState(state => ({enemy: tempEnemy}));
-    this.addLine(tempEnemy.intro);
+    this.addLine(tempEnemy.intro, "intro");
   }
 
   getHealing(){
     this.setState(state => ({eventType: "healing"}));
     this.setState(state => ({enemy: {hp: 0, attack: 30, range: 0, img: fairy, intro:""}}));
-    this.addLine("A helpful fairy has come to help!");
+    this.addLine("✨A helpful fairy has come to help!✨", "intro");
     this.addLine("\"Brave warrior, allow me to use my magic to take care of your wounds.\"", 'fairy')
     this.addLine("You are healed for 30 hit points!  Aren't you lucky?")
 
@@ -175,13 +176,13 @@ class RPG extends React.Component {
   getNpc(){
     this.setState(state => ({eventType: "npc",
     enemy: {hp: 0, attack: 0, range: 0, img: npc, intro:"ok"}}));
-    this.addLine("A npc appeared!");
+    this.addLine("An npc appeared!", "intro");
   }
 
 //Randomly pick next event from selection of scenarios: battle, healing, random event
   getNextEvent(){
     let x = Math.floor(Math.random() * Math.floor(100))
-    console.log(x);
+    this.addLine();
     if(x <= 65){
       this.getEnemy();
     }
@@ -210,6 +211,7 @@ class RPG extends React.Component {
 
       return(
       <div>
+        <Counter totalKilled={this.state.totalKilled}/>
         <Scene enemyImg={this.state.enemy.img} enemyHP={(this.state.enemy.hp/this.state.enemy.maxhp)*100} playerHP={this.state.player.hp}/>
         <TextBox data={this.state}/>
         {buttons}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -18,7 +18,6 @@ class AttackButtons extends React.Component {
           <Col><Button block onClick={console.log('s')}> End the Crusade </Button></Col>
         </Row>
       </Container>
-
     );
   }
 }
