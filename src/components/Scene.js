@@ -12,13 +12,13 @@ import { ProgressBar } from 'react-bootstrap';
 class Scene extends React.Component {
   render(){
     return(
-      <Container className="textCenter">
+      <Container fluid className="textCenter floor">
         <Row>
-          <Col>
-            <Image src = {playerSprite} />
+          <Col style={{display: 'flex'}} className="justify-content-center">
+            <Image src = {playerSprite} className="align-self-end"/>
           </Col>
-          <Col>
-            <Image src = {this.props.enemyImg} />
+          <Col style={{display: 'flex'}} className="justify-content-center">
+            <Image src = {this.props.enemyImg} className="align-self-end"/>
           </Col>
         </Row>
         <Row>

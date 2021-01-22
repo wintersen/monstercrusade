@@ -215,9 +215,10 @@ class RPG extends React.Component {
 
 
       return(
-      <div>
+      <div className="bg pb-4">
+          <div className="woodBorder">
         <Counter totalKilled={this.state.totalKilled}/>
-        <Scene enemyImg={this.state.enemy.img} enemyHP={(this.state.enemy.hp/this.state.enemy.maxhp)*100} playerHP={this.state.player.hp}/>
+        <Scene enemyImg={this.state.enemy.img} enemyHP={(this.state.enemy.hp/this.state.enemy.maxhp)*100} playerHP={this.state.player.hp}/></div>
         <TextBox data={this.state}/>
         {buttons}
       </div>

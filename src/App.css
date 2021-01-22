@@ -14,8 +14,22 @@
 }
 
 .woodBorder {
-  border: 30px solid transparent;
-  border-image: url(./assets/border.png) 30 round;
+  border: 15px solid transparent;
+  border-image: url(./assets/border.png) 15 round;
+}
+
+.floor {
+  background-image: url(./assets/floor.png);
+  background-size: 100% 100%;
+}
+
+.bg {
+  background-image: url(./assets/bg.png);
+  background-size: 100% 100%;
+}
+
+.counter {
+  background-color: #B2E8FF;
 }
 
 .killedCircle{
@@ -32,6 +46,11 @@
   color: white;
   font-size: 30px;
   font-weight: bold;
+}
+
+.textboxSpacer {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* Styling for call outs */

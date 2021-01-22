@@ -9,7 +9,7 @@ import TextLine from './TextLine';
 class TextBox extends React.Component {
   render(){
     return(
-      <Container>
+      <Container className="textboxSpacer">
         <Row>
           <Col className="woodBorder pa-0 px-0" >
             <Container id="aaa" fluid>

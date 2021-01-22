@@ -10,8 +10,8 @@ import Image from 'react-bootstrap/Image';
 class Counter extends React.Component {
 render(){
   return(
-      <Container className="textCenter">
-        <Row className="justify-content-center mt-4">
+      <Container fluid className="textCenter counter">
+        <Row className="justify-content-center pt-4">
           <Col xs="1">
             <div className="killedCircle">
               <span>{this.props.totalKilled}</span>
