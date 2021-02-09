@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/monstercrusade/static/css/main.7a665ef4.chunk.css",
+    "main.js": "/monstercrusade/static/js/main.3e85c54c.chunk.js",
+    "main.js.map": "/monstercrusade/static/js/main.3e85c54c.chunk.js.map",
+    "runtime-main.js": "/monstercrusade/static/js/runtime-main.61a4ad55.js",
+    "runtime-main.js.map": "/monstercrusade/static/js/runtime-main.61a4ad55.js.map",
+    "static/css/2.d9ad5f5c.chunk.css": "/monstercrusade/static/css/2.d9ad5f5c.chunk.css",
+    "static/js/2.70b8cf63.chunk.js": "/monstercrusade/static/js/2.70b8cf63.chunk.js",
+    "static/js/2.70b8cf63.chunk.js.map": "/monstercrusade/static/js/2.70b8cf63.chunk.js.map",
+    "index.html": "/monstercrusade/index.html",
+    "precache-manifest.59fbcf210c767bf6c49f67b88ad55f6c.js": "/monstercrusade/precache-manifest.59fbcf210c767bf6c49f67b88ad55f6c.js",
+    "service-worker.js": "/monstercrusade/service-worker.js",
+    "static/css/2.d9ad5f5c.chunk.css.map": "/monstercrusade/static/css/2.d9ad5f5c.chunk.css.map",
+    "static/css/main.7a665ef4.chunk.css.map": "/monstercrusade/static/css/main.7a665ef4.chunk.css.map",
+    "static/js/2.70b8cf63.chunk.js.LICENSE.txt": "/monstercrusade/static/js/2.70b8cf63.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/monstercrusade/static/media/floor.e59082fe.png",
+    "static/media/temp2.png": "/monstercrusade/static/media/temp2.8f94cab3.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.61a4ad55.js",
+    "static/css/2.d9ad5f5c.chunk.css",
+    "static/js/2.70b8cf63.chunk.js",
+    "static/css/main.7a665ef4.chunk.css",
+    "static/js/main.3e85c54c.chunk.js"
+  ]
+}
