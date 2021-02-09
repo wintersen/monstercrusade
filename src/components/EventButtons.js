@@ -13,7 +13,7 @@ class EventButtons extends React.Component {
     return(
       <Container>
         <Row>
-          <Col><Button block onClick={this.props.onNext}> Continue On </Button></Col>
+          <Col><Button className="rpgButton" block onClick={this.props.onNext}> Continue On </Button></Col>
         </Row>
       </Container>
 

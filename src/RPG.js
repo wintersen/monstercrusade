@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 import TextBox from './components/TextBox';
 import Scene from './components/Scene';
@@ -19,6 +21,7 @@ import enemy4 from './assets/temp5.png';
 import fairy from './assets/fairy.png';
 import npc from './assets/npc.png';
 
+
 class RPG extends React.Component {
   constructor(props){
     super(props);
@@ -27,7 +30,9 @@ class RPG extends React.Component {
       enemy: {hp: 100, attack: 8, range: 3},
       messageHistory: [{text: "The challenge begins!", style: ''}],
       totalKilled: 0,
-      eventType: ''
+      eventType: '',
+      showDefeat: false,
+      showEnd: false
     }
 
     this.onPlayerAttack = this.onPlayerAttack.bind(this);
@@ -35,13 +40,15 @@ class RPG extends React.Component {
     this.onNext = this.onNext.bind(this);
     this.onDeny = this.onDeny.bind(this);
     this.onAccept = this.onAccept.bind(this);
+    this.openDefeat = this.openDefeat.bind(this);
+    this.hideDefeat = this.hideDefeat.bind(this);
+    this.openEnd = this.openEnd.bind(this);
+    this.hideEnd = this.hideEnd.bind(this);
   }
 
   componentDidMount(){
     this.getEnemy();
   }
-
-
 
 //FUNCTION FOR ADDING LINES, second param is for class
   addLine(msg = '==========================================================', cls){
@@ -136,12 +143,20 @@ class RPG extends React.Component {
     return (Math.floor(Math.random() * Math.floor(rng))) + dmg;
   }
 
+  checkDead(){
+    if(this.state.player.hp <= 0){
+      this.setState(state => ({player: {...this.state.player, hp: 0}}));
+      this.openDefeat();
+    }
+  }
+
   onEnemyAttack(def){
     let temp = this.state;
     let damage = this.generateDamage(temp.enemy.attack, temp.enemy.range) - def;
     temp.player.hp -= damage;
     this.setState(state => temp);
     this.addLine("The enemy did " + damage + " points of damage to you!", "damage");
+    this.checkDead();
   }
 
   killEnemy(){
@@ -153,10 +168,10 @@ class RPG extends React.Component {
 //FUNCTIONS FOR GENERATING NEXT ENCOUNTER
   getEnemy(){
     this.setState(state => ({eventType: "enemy"}));
-    let enemyList = [{hp: 65, maxhp: 65, attack: 5, range: 3, img: enemy1, intro: "A giant enemy crab appears!"},
-    {hp: 45, maxhp: 45, attack: 7, range: 5, img: enemy2, intro: "You're beset by an evil centipede!"},
-    {hp: 30, maxhp: 30, attack: 5, range: 3, img: enemy3, intro: "A gross gremlin comes forth!"},
-    {hp: 25, maxhp: 25, attack: 10, range: 10, img: enemy4, intro: "A slime blocks your way!"}];
+    let enemyList = [{hp: 50, maxhp: 50, attack: 5, range: 3, img: enemy1, intro: "A giant enemy crab appears!"},
+    {hp: 35, maxhp: 35, attack: 7, range: 5, img: enemy2, intro: "You're beset by an evil centipede!"},
+    {hp: 45, maxhp: 45, attack: 5, range: 3, img: enemy3, intro: "A gross gremlin comes forth!"},
+    {hp: 20, maxhp: 20, attack: 10, range: 10, img: enemy4, intro: "A slime blocks your way!"}];
 
     let tempEnemy = enemyList[Math.floor(Math.random() * Math.floor(enemyList.length))];
 
@@ -197,31 +212,98 @@ class RPG extends React.Component {
     }
   }
 
+  //Reset state back to initial
+  resetGame(){
+    document.getElementById('messages').innerHTML = ""; //Empty out message box
+
+    let temp = {player: {hp: 100, attack: 10, def: 0, range: 5},
+    enemy: {hp: 100, attack: 8, range: 3},
+    messageHistory: [{text: "The challenge begins!", style: ''}],
+    totalKilled: 0,
+    eventType: '',
+    showDefeat: false,
+    showEnd: false};
+    this.setState(state => temp);
+
+    this.addLine("The challenge begins!");
+    this.getEnemy();
+  }
+
+  //Modal functions
+  openDefeat(){
+    this.setState(state => ({showDefeat: true}));
+  }
+  hideDefeat(){
+    this.resetGame();
+  }
+  openEnd(){
+    this.setState(state => ({showEnd: true}));
+  }
+  hideEnd(){
+    this.resetGame();
+  }
+
   render(){
+
     const eventType = this.state.eventType;
     let buttons;
     switch(eventType){
       default:
         break;
       case 'enemy':
-        buttons = <AttackButtons onPlayerAttack={this.onPlayerAttack} onPlayerDefend={this.onPlayerDefend}/>
+        buttons = <AttackButtons onPlayerAttack={this.onPlayerAttack} onPlayerDefend={this.onPlayerDefend} onEnd={this.openEnd}/>
         break;
       case 'healing':
         buttons = <EventButtons onNext={this.onNext}/>
         break;
       case 'npc':
         buttons = <NpcButtons onAccept={this.onAccept} onDeny={this.onDeny} />
+        break;
     }
 
+    let ending;
+    if(this.state.totalKilled < 10){
+      ending = <p>You only slayed {this.state.totalKilled} monsters...  Why did you even bother trying in the first place?</p>
+    }
+    else if(this.state.totalKilled > 10 && this.state.totalKilled < 20){
+      ending = <p>You bravely slayed {this.state.totalKilled} monsters.  The king is pleased with your effort, but you won't be getting a statue anytime soon.</p>
+    }
+    else{
+      ending = <p>You proudly produce the trophies from {this.state.totalKilled} monsters.  The king and his court gasp in awe!  What power!  What true mastery of the blade!  The king thanks you for your successful conquest, and grants you the title of nobility.  Now you can enjoy your cushy retirement!</p>
+    }
 
       return(
-      <div className="bg pb-4">
-          <div className="woodBorder">
-        <Counter totalKilled={this.state.totalKilled}/>
-        <Scene enemyImg={this.state.enemy.img} enemyHP={(this.state.enemy.hp/this.state.enemy.maxhp)*100} playerHP={this.state.player.hp}/></div>
+      <div className="bg pt-4 pl-2 pr-2 pb-4">
+        <div className="woodBorder">
+          <Counter totalKilled={this.state.totalKilled}/>
+          <Scene enemyImg={this.state.enemy.img} enemyHP={(this.state.enemy.hp/this.state.enemy.maxhp)*100} playerHP={this.state.player.hp}/>
+        </div>
         <TextBox data={this.state}/>
         {buttons}
+
+        <Modal dialogClassName="woodBorder" show={this.state.showDefeat} backdrop="static" keyboard={false}>
+          <Modal.Body className="modalCustom">
+            <h1>You lost!</h1>
+            <p>You let out a final breath as your body succumbs to the pain.  Your legacy ends here...</p>
+          </Modal.Body>
+          <Modal.Footer className="modalCustom">
+            <Button className="rpgButton" onClick={this.hideDefeat}>DO IT AGAIN, BUT BETTER?</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal dialogClassName="woodBorder" show={this.state.showEnd} backdrop="static" keyboard={false}>
+          <Modal.Body className="modalCustom">
+            <h1>You return back to the castle!</h1>
+            <p>You present your king the spoils of your conquest.</p>
+            {ending}
+          </Modal.Body>
+          <Modal.Footer className="modalCustom">
+            <Button className="rpgButton" onClick={this.hideEnd}>BEGIN ANOTHER EXPEDITION</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
+
+      
     );
   }
 }

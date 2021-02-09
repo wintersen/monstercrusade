@@ -10,7 +10,14 @@ import playerSprite from '../assets/temp1.png';
 import { ProgressBar } from 'react-bootstrap';
 
 class Scene extends React.Component {
-  render(){
+  render(){  
+    let bonusHP;
+    if(this.props.playerHP > 100){
+      bonusHP = <ProgressBar variant="success" now={this.props.playerHP-100}></ProgressBar>
+    }
+    else {
+      bonusHP = "";
+    }
     return(
       <Container fluid className="textCenter floor">
         <Row>
@@ -21,12 +28,16 @@ class Scene extends React.Component {
             <Image src = {this.props.enemyImg} className="align-self-end"/>
           </Col>
         </Row>
-        <Row>
+        <Row className="pb-2">
           <Col>
-            <ProgressBar now={this.props.playerHP}></ProgressBar>
+            <ProgressBar className="rpgButton">
+              <ProgressBar now={this.props.playerHP}></ProgressBar>
+              {bonusHP}
+            </ProgressBar>
+            
           </Col>
           <Col>
-            <ProgressBar now={this.props.enemyHP} variant="danger"></ProgressBar>
+            <ProgressBar className="rpgButton" now={this.props.enemyHP} variant="danger"></ProgressBar>
           </Col>
         </Row>
       </Container>

@@ -13,8 +13,8 @@ class NpcButtons extends React.Component {
     return(
       <Container>
         <Row>
-          <Col><Button block onClick={this.props.onAccept}> Accept </Button></Col>
-          <Col><Button block onClick={this.props.onDeny}> Deny </Button></Col>
+          <Col><Button className="rpgButton" block onClick={this.props.onAccept}> Accept </Button></Col>
+          <Col><Button className="rpgButton" block onClick={this.props.onDeny}> Deny </Button></Col>
         </Row>
       </Container>
 
